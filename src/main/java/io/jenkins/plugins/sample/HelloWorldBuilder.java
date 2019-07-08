@@ -1,36 +1,14 @@
 package io.jenkins.plugins.sample;
 
-import hudson.Launcher;
-import hudson.Extension;
-import hudson.FilePath;
-import hudson.EnvVars;
-import hudson.util.FormValidation;
-import hudson.model.AbstractProject;
-import hudson.model.Run;
-import hudson.model.TaskListener;
-import hudson.tasks.Builder;
-import hudson.tasks.BuildStepDescriptor;
-import org.kohsuke.stapler.DataBoundConstructor;
-import org.kohsuke.stapler.QueryParameter;
+import java.io.File;
+import java.io.IOException;
 
 import javax.servlet.ServletException;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.net.http.HttpClient;
-
-import jenkins.tasks.SimpleBuildStep;
-import org.jenkinsci.Symbol;
-import org.kohsuke.stapler.DataBoundSetter;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.client.methods.HttpUriRequest;
-import org.apache.http.client.methods.RequestBuilder;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.mime.HttpMultipartMode;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
@@ -38,9 +16,22 @@ import org.apache.http.entity.mime.content.FileBody;
 import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
-import org.apache.http.impl.client.HttpClients;
-import org.apache.http.impl.client.LaxRedirectStrategy;
 import org.apache.http.util.EntityUtils;
+import org.jenkinsci.Symbol;
+import org.kohsuke.stapler.DataBoundConstructor;
+import org.kohsuke.stapler.QueryParameter;
+
+import hudson.EnvVars;
+import hudson.Extension;
+import hudson.FilePath;
+import hudson.Launcher;
+import hudson.model.AbstractProject;
+import hudson.model.Run;
+import hudson.model.TaskListener;
+import hudson.tasks.BuildStepDescriptor;
+import hudson.tasks.Builder;
+import hudson.util.FormValidation;
+import jenkins.tasks.SimpleBuildStep;
 
 
 public class HelloWorldBuilder extends Builder implements SimpleBuildStep {
@@ -116,14 +107,19 @@ public class HelloWorldBuilder extends Builder implements SimpleBuildStep {
         String myVersion = envVars.get(environmentrelease);
         // https://wiki.jenkins.io/display/JENKINS/Building+a+software+project
         listener.getLogger().println("Version   : " + myVersion );
-        String myUploadfile = workspace + "\\" + filename;
-        File myMobileApp = new File(myUploadfile);
-        if (myMobileApp.exists()) {
-            listener.getLogger().println("Mobile file found!");
-            uploadfile(myUploadfile, branchid, apikey, myVersion, listener);
+        if (myVersion != null) {
+            String myUploadfile = workspace + "\\" + filename;
+            File myMobileApp = new File(myUploadfile);
+            if (myMobileApp.exists()) {
+                listener.getLogger().println("Mobile file found!");
+                uploadfile(myUploadfile, branchid, apikey, myVersion, listener);
+            } else {
+                listener.getLogger().println("Mobile file not found!");
+            }
         } else {
-            listener.getLogger().println("Mobile file not found!");
+            listener.getLogger().println("Environment variable for release version not defined!");
         }
+
     }
      
 

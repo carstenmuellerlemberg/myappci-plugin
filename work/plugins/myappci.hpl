@@ -2,12 +2,11 @@ Manifest-Version: 1.0
 Group-Id: io.jenkins.plugins
 Short-Name: myappci
 Long-Name: MyAppCI
-Plugin-Version: 1.0-SNAPSHOT (private-a8c4bcba-carsten.mueller)
+Plugin-Version: 1.0-SNAPSHOT (private-6a972b44-carsten.mueller)
 Hudson-Version: 2.7.3
 Jenkins-Version: 2.7.3
 Plugin-Dependencies: structs:1.7
 Plugin-Developers: 
-Support-Dynamic-Loading: true
 Libraries: C:\VisualStudioCodeWorkSpace\myappci\src\main\resources,C:\
  VisualStudioCodeWorkSpace\myappci\target\classes,C:\Users\carsten.mue
  ller\.m2\repository\commons-codec\commons-codec\1.9\commons-codec-1.9
