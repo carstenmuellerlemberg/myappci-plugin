@@ -16,7 +16,7 @@ Integrate the task into you mobile app pipeline.
 **Branchname/Branchid:**
 
  
-The id of your CI branch maintained in MyAppCI (requireds a professional subscription).
+The id of your CI branch maintained in MyAppCI (requires a professional subscription).
 
   
 **API Key:**
