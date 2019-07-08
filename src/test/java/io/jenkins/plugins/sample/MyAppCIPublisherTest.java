@@ -10,7 +10,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.jvnet.hudson.test.JenkinsRule;
 
-public class HelloWorldBuilderTest {
+public class MyAppCIPublisherTest {
 
     @Rule
     public JenkinsRule jenkins = new JenkinsRule();

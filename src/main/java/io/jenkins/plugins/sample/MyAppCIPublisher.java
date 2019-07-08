@@ -36,7 +36,7 @@ import hudson.util.FormValidation;
 import jenkins.tasks.SimpleBuildStep;
 
 
-public class HelloWorldBuilder extends Builder implements SimpleBuildStep {
+public class MyAppCIPublisher extends Builder implements SimpleBuildStep {
 
     private final String branchid;
     private final String apikey;
@@ -45,7 +45,7 @@ public class HelloWorldBuilder extends Builder implements SimpleBuildStep {
 
 
     @DataBoundConstructor
-    public HelloWorldBuilder(String branchid, String apikey, String filename, String environmentrelease) {
+    public MyAppCIPublisher(String branchid, String apikey, String filename, String environmentrelease) {
         this.branchid = branchid;
         this.apikey = apikey;
         this.filename = filename;
