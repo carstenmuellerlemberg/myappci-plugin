@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Group-Id: io.jenkins.plugins
 Short-Name: myappci
 Long-Name: MyAppCI
-Plugin-Version: 1.0-SNAPSHOT (private-6a972b44-carsten.mueller)
+Plugin-Version: 1.0-SNAPSHOT (private-83c2d45f-carsten.mueller)
 Hudson-Version: 2.7.3
 Jenkins-Version: 2.7.3
 Plugin-Dependencies: structs:1.7

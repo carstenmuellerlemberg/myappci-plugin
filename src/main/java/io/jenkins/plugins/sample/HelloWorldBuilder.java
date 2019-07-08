@@ -3,6 +3,7 @@ package io.jenkins.plugins.sample;
 import java.io.File;
 import java.io.IOException;
 
+import javax.annotation.CheckForNull;
 import javax.servlet.ServletException;
 
 import org.apache.http.HttpEntity;
@@ -21,6 +22,7 @@ import org.jenkinsci.Symbol;
 import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.QueryParameter;
 
+import hudson.AbortException;
 import hudson.EnvVars;
 import hudson.Extension;
 import hudson.FilePath;
@@ -49,16 +51,17 @@ public class HelloWorldBuilder extends Builder implements SimpleBuildStep {
         this.filename = filename;
         this.environmentrelease = environmentrelease;
     }
-
+    
+    @CheckForNull
     public String getBranchid() {
         return this.branchid;
     }
 
-
+    @CheckForNull
     public String getApikey() {
         return this.apikey;
     }
-
+    @CheckForNull
     public String getFilename() {
         return this.filename;
     }
@@ -92,6 +95,7 @@ public class HelloWorldBuilder extends Builder implements SimpleBuildStep {
             HttpEntity responseEntity = response.getEntity();
             String responseString = EntityUtils.toString(responseEntity, "UTF-8");
             listener.getLogger().println("Response  : " + responseString );
+            throw new AbortException("App publishing failed:  " + responseString);
         }
         listener.getLogger().println("Status  : " + statusCode );
 	
@@ -102,6 +106,7 @@ public class HelloWorldBuilder extends Builder implements SimpleBuildStep {
         listener.getLogger().println("Filename  : " + filename );
         listener.getLogger().println("Branchname: " + branchid );
         listener.getLogger().println("API Key   :" + apikey );
+        
         EnvVars envVars = new EnvVars();
         envVars = run.getEnvironment(listener);
         String myVersion = envVars.get(environmentrelease);
@@ -115,9 +120,11 @@ public class HelloWorldBuilder extends Builder implements SimpleBuildStep {
                 uploadfile(myUploadfile, branchid, apikey, myVersion, listener);
             } else {
                 listener.getLogger().println("Mobile file not found!");
+                throw new AbortException("Mobile file not found at " + myUploadfile);
             }
         } else {
             listener.getLogger().println("Environment variable for release version not defined!");
+            throw new AbortException("Environment variable for release version not defined!");
         }
 
     }

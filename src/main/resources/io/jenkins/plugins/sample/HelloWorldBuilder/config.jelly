@@ -4,7 +4,7 @@
         <f:textbox />
     </f:entry>
     <f:entry title="${%apikey}" field="apikey">
-        <f:textbox />
+        <f:password />
     </f:entry>
     <f:entry title="${%filename}" field="filename">
         <f:textbox />
