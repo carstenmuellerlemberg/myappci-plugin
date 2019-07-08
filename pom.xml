@@ -8,7 +8,7 @@
         <relativePath />
     </parent>
     <groupId>io.jenkins.plugins</groupId>
-    <artifactId>my-appci</artifactId>
+    <artifactId>myappci</artifactId>
     <version>1.0-BETA</version>
     <packaging>hpi</packaging>
     <properties>
