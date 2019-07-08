@@ -52,16 +52,16 @@ public class HelloWorldBuilder extends Builder implements SimpleBuildStep {
         this.environmentrelease = environmentrelease;
     }
     
-    @CheckForNull
+
     public String getBranchid() {
         return this.branchid;
     }
 
-    @CheckForNull
+  
     public String getApikey() {
         return this.apikey;
     }
-    @CheckForNull
+ 
     public String getFilename() {
         return this.filename;
     }
@@ -107,8 +107,7 @@ public class HelloWorldBuilder extends Builder implements SimpleBuildStep {
         listener.getLogger().println("Branchname: " + branchid );
         listener.getLogger().println("API Key   :" + apikey );
         
-        EnvVars envVars = new EnvVars();
-        envVars = run.getEnvironment(listener);
+        EnvVars envVars = run.getEnvironment(listener);
         String myVersion = envVars.get(environmentrelease);
         // https://wiki.jenkins.io/display/JENKINS/Building+a+software+project
         listener.getLogger().println("Version   : " + myVersion );
@@ -130,7 +129,7 @@ public class HelloWorldBuilder extends Builder implements SimpleBuildStep {
     }
      
 
-    @Symbol("myappciPlugin")
+    @Symbol("myappci")
     @Extension
     public static final class DescriptorImpl extends BuildStepDescriptor<Builder> {
 

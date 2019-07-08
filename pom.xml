@@ -9,7 +9,7 @@
     </parent>
     <groupId>io.jenkins.plugins</groupId>
     <artifactId>my-appci</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0-BETA</version>
     <packaging>hpi</packaging>
     <properties>
         <!-- Baseline Jenkins version you use to build the plugin. Users must have this version or newer to run. -->
@@ -92,7 +92,7 @@
         </dependency>
     </dependencies>
 
-    <!--> If you want this to appear on the wiki page:  -->
+    <!--> If you want this to appear on the wiki page:  
     <developers>
       <developer>
         <id>carstenmuellerlemberg</id>
@@ -100,7 +100,7 @@
         <email>carsten.mueller.lemberg@gmail.com</email>
       </developer>
     </developers> 
-
+    -->
     <!-- Assuming you want to host on @jenkinsci:
     <url>https://wiki.jenkins.io/display/JENKINS/TODO+Plugin</url>
     <scm>

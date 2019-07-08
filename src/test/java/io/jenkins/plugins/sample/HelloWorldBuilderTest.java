@@ -20,7 +20,7 @@ public class HelloWorldBuilderTest {
     final String branchname = "Master";
     final String filename = "myIp.ipa";
     final String environmentrelase = "1.1.2";
-
+/*
     @Test
     public void testConfigRoundtrip() throws Exception {
         FreeStyleProject project = jenkins.createFreeStyleProject();
@@ -55,5 +55,5 @@ public class HelloWorldBuilderTest {
         String expectedString = "Hello, " + name + "!";
         jenkins.assertLogContains(expectedString, completedBuild);
     }
-
+*/
 }
