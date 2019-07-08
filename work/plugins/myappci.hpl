@@ -1,0 +1,13 @@
+Manifest-Version: 1.0
+Group-Id: io.jenkins.plugins
+Short-Name: myappci
+Long-Name: MyAppCI
+Plugin-Version: 1.0-SNAPSHOT (private-07/08/2019 08:40-carsten.mueller)
+Hudson-Version: 2.7.3
+Jenkins-Version: 2.7.3
+Plugin-Dependencies: structs:1.7
+Plugin-Developers: 
+Libraries: C:\VisualStudioCodeWorkSpace\myappci\src\main\resources,C:\
+ VisualStudioCodeWorkSpace\myappci\target\classes
+Resource-Path: C:\VisualStudioCodeWorkSpace\myappci\src\main\webapp
+

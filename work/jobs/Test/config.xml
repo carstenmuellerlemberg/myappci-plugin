@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<project>
+  <actions/>
+  <description></description>
+  <keepDependencies>false</keepDependencies>
+  <properties/>
+  <scm class="hudson.scm.NullSCM"/>
+  <canRoam>true</canRoam>
+  <disabled>false</disabled>
+  <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
+  <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+  <triggers/>
+  <concurrentBuild>false</concurrentBuild>
+  <builders>
+    <io.jenkins.plugins.sample.HelloWorldBuilder plugin="myappci@1.0-SNAPSHOT">
+      <branchid>Master</branchid>
+      <apikey>7a3e5104-9a0c-489c-8d29-899fbb5f5203</apikey>
+      <filename>1.apk</filename>
+      <environmentrelease>BUILD_NUMBER</environmentrelease>
+    </io.jenkins.plugins.sample.HelloWorldBuilder>
+  </builders>
+  <publishers/>
+  <buildWrappers/>
+</project>
