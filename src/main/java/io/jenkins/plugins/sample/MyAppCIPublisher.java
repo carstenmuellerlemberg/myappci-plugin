@@ -91,6 +91,10 @@ public class MyAppCIPublisher extends Builder implements SimpleBuildStep {
         CloseableHttpClient  client = HttpClientBuilder.create().build();
         HttpResponse response = client.execute(post);	
         int statusCode = response.getStatusLine().getStatusCode();
+        if (statusCode == 409) {
+            listener.getLogger().println("Version conflict. Most likley you need to increase your version number");
+            throw new AbortException("Version conflict. Most likley you need to increase your version number");
+        }
         if (statusCode != 200) {
             HttpEntity responseEntity = response.getEntity();
             String responseString = EntityUtils.toString(responseEntity, "UTF-8");
@@ -105,7 +109,6 @@ public class MyAppCIPublisher extends Builder implements SimpleBuildStep {
     public void perform(Run<?, ?> run, FilePath workspace, Launcher launcher, TaskListener listener) throws InterruptedException, IOException {   
         listener.getLogger().println("Filename  : " + filename );
         listener.getLogger().println("Branchname: " + branchid );
-        listener.getLogger().println("API Key   :" + apikey );
         
         EnvVars envVars = run.getEnvironment(listener);
         String myVersion = envVars.get(environmentrelease);
