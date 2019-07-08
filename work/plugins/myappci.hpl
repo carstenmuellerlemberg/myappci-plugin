@@ -2,12 +2,19 @@ Manifest-Version: 1.0
 Group-Id: io.jenkins.plugins
 Short-Name: myappci
 Long-Name: MyAppCI
-Plugin-Version: 1.0-SNAPSHOT (private-07/08/2019 08:40-carsten.mueller)
+Plugin-Version: 1.0-SNAPSHOT (private-a8c4bcba-carsten.mueller)
 Hudson-Version: 2.7.3
 Jenkins-Version: 2.7.3
 Plugin-Dependencies: structs:1.7
 Plugin-Developers: 
+Support-Dynamic-Loading: true
 Libraries: C:\VisualStudioCodeWorkSpace\myappci\src\main\resources,C:\
- VisualStudioCodeWorkSpace\myappci\target\classes
+ VisualStudioCodeWorkSpace\myappci\target\classes,C:\Users\carsten.mue
+ ller\.m2\repository\commons-codec\commons-codec\1.9\commons-codec-1.9
+ .jar,C:\Users\carsten.mueller\.m2\repository\org\apache\httpcomponent
+ s\httpclient\4.5.3\httpclient-4.5.3.jar,C:\Users\carsten.mueller\.m2\
+ repository\org\apache\httpcomponents\httpcore\4.4.6\httpcore-4.4.6.ja
+ r,C:\Users\carsten.mueller\.m2\repository\org\apache\httpcomponents\h
+ ttpmime\4.5.3\httpmime-4.5.3.jar
 Resource-Path: C:\VisualStudioCodeWorkSpace\myappci\src\main\webapp
 

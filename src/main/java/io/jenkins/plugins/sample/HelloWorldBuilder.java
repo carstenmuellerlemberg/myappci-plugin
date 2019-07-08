@@ -16,10 +16,31 @@ import org.kohsuke.stapler.QueryParameter;
 import javax.servlet.ServletException;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.net.http.HttpClient;
+
 import jenkins.tasks.SimpleBuildStep;
 import org.jenkinsci.Symbol;
 import org.kohsuke.stapler.DataBoundSetter;
+
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.ResponseHandler;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpUriRequest;
+import org.apache.http.client.methods.RequestBuilder;
+import org.apache.http.entity.ContentType;
+import org.apache.http.entity.mime.HttpMultipartMode;
+import org.apache.http.entity.mime.MultipartEntityBuilder;
+import org.apache.http.entity.mime.content.FileBody;
+import org.apache.http.entity.mime.content.StringBody;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.impl.client.LaxRedirectStrategy;
+import org.apache.http.util.EntityUtils;
 
 
 public class HelloWorldBuilder extends Builder implements SimpleBuildStep {
@@ -55,6 +76,36 @@ public class HelloWorldBuilder extends Builder implements SimpleBuildStep {
         return this.environmentrelease;
     }
 
+    private void uploadfile(String uploadFile, String branchname, String apikey, String version, TaskListener listener)
+            throws ClientProtocolException, IOException {
+        File file = new File(uploadFile);
+        HttpPost post = new HttpPost("https://myappci.com/api/ci");
+        FileBody fileBody = new FileBody(file, ContentType.DEFAULT_BINARY);
+        StringBody stringBranch = new StringBody(branchname, ContentType.MULTIPART_FORM_DATA);
+        StringBody stringApiKey = new StringBody(apikey, ContentType.MULTIPART_FORM_DATA);
+        StringBody stringVersion = new StringBody(version, ContentType.MULTIPART_FORM_DATA);
+        // 
+        MultipartEntityBuilder builder = MultipartEntityBuilder.create();
+        builder.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
+        builder.addPart("app", fileBody);
+        builder.addPart("branch", stringBranch);
+        builder.addPart("apikey", stringApiKey);
+        builder.addPart("version", stringVersion);
+        HttpEntity entity = builder.build();
+        //
+        post.setEntity(entity);
+        CloseableHttpClient  client = HttpClientBuilder.create().build();
+        HttpResponse response = client.execute(post);	
+        int statusCode = response.getStatusLine().getStatusCode();
+        if (statusCode != 200) {
+            HttpEntity responseEntity = response.getEntity();
+            String responseString = EntityUtils.toString(responseEntity, "UTF-8");
+            listener.getLogger().println("Response  : " + responseString );
+        }
+        listener.getLogger().println("Status  : " + statusCode );
+	
+	}
+
     @Override
     public void perform(Run<?, ?> run, FilePath workspace, Launcher launcher, TaskListener listener) throws InterruptedException, IOException {   
         listener.getLogger().println("Filename  : " + filename );
@@ -65,9 +116,11 @@ public class HelloWorldBuilder extends Builder implements SimpleBuildStep {
         String myVersion = envVars.get(environmentrelease);
         // https://wiki.jenkins.io/display/JENKINS/Building+a+software+project
         listener.getLogger().println("Version   : " + myVersion );
-        File myMobileApp = new File(workspace + "\\" + filename);
+        String myUploadfile = workspace + "\\" + filename;
+        File myMobileApp = new File(myUploadfile);
         if (myMobileApp.exists()) {
             listener.getLogger().println("Mobile file found!");
+            uploadfile(myUploadfile, branchid, apikey, myVersion, listener);
         } else {
             listener.getLogger().println("Mobile file not found!");
         }
