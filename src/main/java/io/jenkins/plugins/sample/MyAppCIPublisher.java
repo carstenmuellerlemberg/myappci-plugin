@@ -32,6 +32,7 @@ import hudson.model.Run;
 import hudson.model.TaskListener;
 import hudson.tasks.BuildStepDescriptor;
 import hudson.tasks.Builder;
+import hudson.util.Secret;
 import hudson.util.FormValidation;
 import jenkins.tasks.SimpleBuildStep;
 
@@ -39,7 +40,7 @@ import jenkins.tasks.SimpleBuildStep;
 public class MyAppCIPublisher extends Builder implements SimpleBuildStep {
 
     private final String branchid;
-    private final String apikey;
+    private final Secret apikey;
     private final String filename;
     private final String environmentrelease;
 
@@ -47,7 +48,7 @@ public class MyAppCIPublisher extends Builder implements SimpleBuildStep {
     @DataBoundConstructor
     public MyAppCIPublisher(String branchid, String apikey, String filename, String environmentrelease) {
         this.branchid = branchid;
-        this.apikey = apikey;
+        this.apikey = Secret.fromString(apikey);;
         this.filename = filename;
         this.environmentrelease = environmentrelease;
     }
@@ -59,7 +60,7 @@ public class MyAppCIPublisher extends Builder implements SimpleBuildStep {
 
   
     public String getApikey() {
-        return this.apikey;
+        return Secret.toString(apikey);
     }
  
     public String getFilename() {
@@ -70,13 +71,13 @@ public class MyAppCIPublisher extends Builder implements SimpleBuildStep {
         return this.environmentrelease;
     }
 
-    private void uploadfile(String uploadFile, String branchname, String apikey, String version, TaskListener listener)
+    private void uploadfile(String uploadFile, String branchname, Secret apikey, String version, TaskListener listener)
             throws ClientProtocolException, IOException {
         File file = new File(uploadFile);
         HttpPost post = new HttpPost("https://myappci.com/api/ci");
         FileBody fileBody = new FileBody(file, ContentType.DEFAULT_BINARY);
         StringBody stringBranch = new StringBody(branchname, ContentType.MULTIPART_FORM_DATA);
-        StringBody stringApiKey = new StringBody(apikey, ContentType.MULTIPART_FORM_DATA);
+        StringBody stringApiKey = new StringBody(Secret.toString(apikey), ContentType.MULTIPART_FORM_DATA);
         StringBody stringVersion = new StringBody(version, ContentType.MULTIPART_FORM_DATA);
         // 
         MultipartEntityBuilder builder = MultipartEntityBuilder.create();
@@ -98,7 +99,7 @@ public class MyAppCIPublisher extends Builder implements SimpleBuildStep {
         if (statusCode != 200) {
             HttpEntity responseEntity = response.getEntity();
             String responseString = EntityUtils.toString(responseEntity, "UTF-8");
-            listener.getLogger().println("Response  : " + responseString );
+            listener.getLogger().println("Response  : " + statusCode + "  " + responseString);
             throw new AbortException("App publishing failed:  " + responseString);
         }
         listener.getLogger().println("Status  : " + statusCode );
